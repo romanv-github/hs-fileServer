@@ -7,6 +7,7 @@ import java.util.Scanner;
 class Server {
 
     public static void main(String[] args) {
+        String fileServerRootFolder = "C:\\Users\\RomanVatagin\\IdeaProjects\\File Server\\File Server\\task\\src\\server\\data\\";
         System.out.println("Server started!");
         try (ServerSocket serverSocket = new ServerSocket(23456)) {
             while (true) {
@@ -20,7 +21,7 @@ class Server {
                     switch (command[0].toUpperCase()) {
                         case "GET" -> {
                             try {
-                                File getFile = new File("C:\\Users\\RomanVatagin\\IdeaProjects\\File Server\\File Server\\task\\src\\server\\data\\" + command[1]);
+                                File getFile = new File(fileServerRootFolder + command[1]);
                                 if (getFile.exists()) {
                                     output.writeUTF("200");
                                     Scanner fileReader = new Scanner(getFile);
@@ -39,7 +40,7 @@ class Server {
                         }
                         case "PUT" -> {
                             try {
-                                File newFile = new File("C:\\Users\\RomanVatagin\\IdeaProjects\\File Server\\File Server\\task\\src\\server\\data\\" + command[1]);
+                                File newFile = new File(fileServerRootFolder + command[1]);
                                 if (newFile.exists()) {
                                     output.writeUTF("403");
                                 } else {
@@ -66,9 +67,9 @@ class Server {
                         }
                         case "DELETE" -> {
                             try {
-                                File delFile = new File("C:\\Users\\RomanVatagin\\IdeaProjects\\File Server\\File Server\\task\\src\\server\\data\\" + command[1]);
+                                File delFile = new File(fileServerRootFolder + command[1]);
                                 System.out.println("Attempting to delete the file:");
-                                System.out.println("C:\\Users\\RomanVatagin\\IdeaProjects\\File Server\\File Server\\task\\src\\server\\data\\" + command[1]);
+                                System.out.println(fileServerRootFolder + command[1]);
                                 if (delFile.exists()) {
                                     if (delFile.delete()) {
                                         output.writeUTF("200");
@@ -105,4 +106,3 @@ class Server {
         //System.out.println("Server " + Thread.currentThread().getId() + " terminated!");
     }
 }
-
