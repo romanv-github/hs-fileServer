@@ -24,9 +24,10 @@ class Server {
                                 File getFile = new File(fileServerRootFolder + command[1]);
                                 if (getFile.exists()) {
                                     output.writeUTF("200");
-                                    Scanner fileReader = new Scanner(getFile);
-                                    while (fileReader.hasNext()) {
-                                        output.writeUTF(fileReader.nextLine());
+                                    try (Scanner fileReader = new Scanner(getFile)) {
+                                        while (fileReader.hasNext()) {
+                                            output.writeUTF(fileReader.nextLine());
+                                        }
                                     }
                                 } else {
                                     output.writeUTF("404");
